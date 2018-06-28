@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/flat_ui_color_green_darner_tail</color>
+    <color name="colorPrimaryDark">@color/flat_ui_color_green_darner_tail_dark</color>
+    <color name="colorAccent">@color/flat_ui_color_green_darner_tail</color>
+
+
+    <color name="flat_ui_color_green_darner_tail">#74b9ff</color>
+    <color name="flat_ui_color_green_darner_tail_dark">#4da5ff</color>
+    <color name="bg_color_page">#eaf4ff</color>
+
 </resources>
