@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import io.github.josephdalughut.journal.android.R;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesFragment;
 
 /**
  * Our Main {@link android.app.Activity}, holds other visual components our users would interact with.
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); //inflate our layout
+
+        showMainUi();
     }
 
     /**
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
         }
         transaction.commit();
+    }
+
+    //moves to entries fragment
+    private void showMainUi(){
+        addFragmentToUi(EntriesFragment.newInstance(), true);
     }
 
 }

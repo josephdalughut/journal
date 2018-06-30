@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_page">16dp</dimen>
+    <dimen name="height_toolbar">56dp</dimen>
+    <dimen name="elevation_toolbar">4dp</dimen>
+    <dimen name="radius_entry_edit">4dp</dimen>
+    <dimen name="elevation_entry_edit">16dp</dimen>
+    <dimen name="margin_page_half">8dp</dimen>
+</resources>

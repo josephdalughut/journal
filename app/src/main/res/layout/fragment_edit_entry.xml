@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:background="@android:color/white"
+    android:focusable="true" android:layout_width="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="@dimen/height_toolbar"
+        app:contentInsetStart="0dp"
+        android:elevation="@dimen/elevation_toolbar"
+        app:elevation="@dimen/elevation_toolbar"
+        >
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_arrow_back"
+            android:tint="@color/appDarkSecondary"
+            />
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/laySwipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/height_toolbar"
+        >
+
+        <ScrollView
+            android:id="@+id/vwContent"
+            android:layout_width="match_parent"
+            android:fillViewport="true"
+            android:visibility="invisible"
+            android:padding="@dimen/margin_page"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="@dimen/margin_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtEntryTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/height_toolbar"
+                    android:hint="@string/text_title"
+                    android:background="@android:color/transparent"
+                    android:maxLines="2"
+                    android:inputType="textCapSentences"
+                    android:imeOptions="actionNext"
+                    android:textStyle="bold">
+
+                    <requestFocus/>
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/edtEntryContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_page"
+                    android:hint="@string/text_hint_edit_entry"
+                    android:background="@android:color/transparent"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:imeOptions="actionDone"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

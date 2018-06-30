@@ -8,5 +8,7 @@
     <color name="flat_ui_color_green_darner_tail">#74b9ff</color>
     <color name="flat_ui_color_green_darner_tail_dark">#4da5ff</color>
     <color name="bg_color_page">#eaf4ff</color>
+    <color name="appDarkSecondary">#999999</color>
+    <color name="colorTextPrimary">#222222</color>
 
 </resources>

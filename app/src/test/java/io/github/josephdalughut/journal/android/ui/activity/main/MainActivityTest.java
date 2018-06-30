@@ -1,6 +1,7 @@
 package io.github.josephdalughut.journal.android.ui.activity.main;
 
 import android.support.v4.app.Fragment;
+import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import static org.junit.Assert.*;
  *
  * Unit testing {@link MainActivity}
  */
+@MediumTest
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class MainActivityTest {
