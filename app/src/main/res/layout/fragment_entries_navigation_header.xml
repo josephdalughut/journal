@@ -54,15 +54,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:visibility="invisible"
         android:gravity="center"
         android:padding="@dimen/margin_page">
 
-        <ImageView
+        <com.github.abdularis.civ.AvatarImageView
             android:id="@+id/imgUserAvatar"
             android:layout_width="@dimen/height_entries_navigation_avatar"
             android:layout_height="@dimen/height_entries_navigation_avatar"
             android:src="@drawable/ic_account_circle"
+            app:strokeWidth="0dp"
+            app:state="IMAGE"
+            app:avatarBackgroundColor="@color/colorAccent"
             />
 
         <FrameLayout
