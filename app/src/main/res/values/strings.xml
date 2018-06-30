@@ -16,6 +16,5 @@
     <string name="text_sign_in_with_google">SignIn with Google</string>
     <string name="text_info_sign_in_navigation_header">Sign in to save and sync your Journal</string>
     <string name="text_info_login_sync_navigation_header">Your Journal is synced with Google</string>
-    <string name="firebase_web_client_id">653086207869-9tkdei2el44lcbitgockg6125k2f2hv8.apps.googleusercontent.com</string>
     <string name="text_info_empty_entries">You have no entries yet.</string>
 </resources>
