@@ -79,4 +79,10 @@ public class EntriesPresenterTest {
         verify(mView).showEntry(entry.getId());
     }
 
+    @Test
+    public void onSearchButtonClicked_showsSearchUi(){
+        mPresenter.onSearchButtonClicked();
+        verify(mView).showSearchUi();
+    }
+
 }

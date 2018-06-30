@@ -1,5 +1,6 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.edit;
 
+import io.github.josephdalughut.journal.android.R;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 
 /**
@@ -56,6 +57,8 @@ public class EntryEditPresenter implements EntryEditContract.Presenter, EntryEdi
 
         mView.showLoadingProgress(false);
         mView.showContentUi(true);
+
+        if(entry.getId() != null) mView.inflateOptionsMenu(R.menu.menu_entry);
     }
 
     @Override
@@ -70,5 +73,18 @@ public class EntryEditPresenter implements EntryEditContract.Presenter, EntryEdi
         if(mRepository == null)
             return;
         mRepository.setEntryContent(newContent);
+    }
+
+    @Override
+    public void onDeleteButtonClicked() {
+        if(mView == null) return;
+        mView.showDeleteDialog();
+    }
+
+    @Override
+    public void onConfirmDeleteButtonClicked() {
+        if(mView == null || mRepository == null) return;
+        mRepository.deleteEntry();
+        mView.navigateBack();
     }
 }

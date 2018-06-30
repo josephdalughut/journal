@@ -62,4 +62,11 @@ public class EntriesPresenter implements EntriesContract.Presenter, Observer<Lis
         mView.showEntries(entries);
         mView.showLoadingProgress(false);
     }
+
+    @Override
+    public void onSearchButtonClicked() {
+        if(mView == null)
+            return;
+        mView.showSearchUi();
+    }
 }

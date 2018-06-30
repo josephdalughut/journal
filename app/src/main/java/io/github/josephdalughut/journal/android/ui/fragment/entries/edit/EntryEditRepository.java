@@ -16,6 +16,7 @@ public interface EntryEditRepository {
     public void loadEntry(Long entryId, LoadEntryCallback loadEntryCallback);
     public void setEntryTitle(String title);
     public void setEntryContent(String content);
+    public void deleteEntry();
 
     public interface LoadEntryCallback {
         public void onEntryLoaded(Entry entry);

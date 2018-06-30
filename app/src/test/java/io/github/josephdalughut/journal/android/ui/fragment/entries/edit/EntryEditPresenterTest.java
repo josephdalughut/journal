@@ -14,8 +14,10 @@ import org.mockito.MockitoAnnotations;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -76,6 +78,24 @@ public class EntryEditPresenterTest {
     }
 
     @Test
+    public void loadEntry_onNewEntry_neverShowsDeleteMenu(){
+        Entry entry = new Entry();
+        mPresenter.loadEntry(anyLong());
+        verify(mRepository).loadEntry(anyLong(), mEntrySupplierCaptor.capture());
+        mEntrySupplierCaptor.getValue().onEntryLoaded(entry);
+        verify(mView, never()).inflateOptionsMenu(anyInt());
+    }
+
+    @Test
+    public void loadEntry_onExistingEntry_showsDeleteMenu(){
+        Entry entry = new Entry().setId(1L); //an entry with an id exists
+        mPresenter.loadEntry(anyLong());
+        verify(mRepository).loadEntry(anyLong(), mEntrySupplierCaptor.capture());
+        mEntrySupplierCaptor.getValue().onEntryLoaded(entry);
+        verify(mView).inflateOptionsMenu(anyInt());
+    }
+
+    @Test
     public void saveChanges_savesEntry() {
         mPresenter.saveChanges();
         verify(mRepository).saveEntry();
@@ -91,6 +111,19 @@ public class EntryEditPresenterTest {
     public void onEntryContentChanged_changesEntryContent(){
         mPresenter.onEntryContentChanged(anyString());
         verify(mRepository).setEntryContent(anyString());
+    }
+
+    @Test
+    public void onDeleteButtonClicked_showsDeleteDialog(){
+        mPresenter.onDeleteButtonClicked();
+        verify(mView).showDeleteDialog();
+    }
+
+    @Test
+    public void onConfirmDeleteButtonClicked_removesEntry(){
+        mPresenter.onConfirmDeleteButtonClicked();
+        verify(mRepository).deleteEntry();
+        verify(mView).navigateBack();
     }
 
 }

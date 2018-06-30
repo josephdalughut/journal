@@ -137,4 +137,8 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
         getMainActivity().addFragmentToUi(EntryEditFragment.newInstance(entryId), false);
     }
 
+    @Override
+    public void showSearchUi() {
+
+    }
 }

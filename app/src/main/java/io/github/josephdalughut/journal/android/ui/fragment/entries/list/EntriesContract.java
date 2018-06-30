@@ -26,12 +26,14 @@ public interface EntriesContract {
         public void showLoadingProgress(boolean visible);
         public void showEntries(List<Entry> entries);
         public void showEntry(Long entryId);
+        public void showSearchUi();
     }
 
     public interface Presenter {
         public void onAddEntryButtonClicked();
         public void loadEntries();
         public void onEntryItemSelected(Entry entry);
+        public void onSearchButtonClicked();
     }
 
 }

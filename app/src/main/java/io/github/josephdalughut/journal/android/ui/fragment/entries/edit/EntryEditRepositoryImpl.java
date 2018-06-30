@@ -30,7 +30,7 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
 
     @Override
     public void saveEntry() {
-        if(mEntry.getId() == null && (mEntry.isTitleEmpty() && mEntry.isContentEmpty())){
+        if(mEntry == null || mEntry.getId() == null && (mEntry.isTitleEmpty() && mEntry.isContentEmpty())){
             Log.d(LOG_TAG, "Ignoring empty entry");
             return;
         }
@@ -84,5 +84,23 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
         if(mEntry == null)
             return;
         mEntry.setContent(content);
+    }
+
+    @Override
+    public void deleteEntry() {
+        Log.d(LOG_TAG, "Delete entry method called");
+        if(mEntry == null)
+            return;
+        Entry deletedEntry = mEntry; //cache entry to delete, set to null, if not it gets saved again.
+        this.mEntry = null;
+        Log.d(LOG_TAG, "Deleting entry: "+deletedEntry.getId());
+        new AsyncTask<Entry, Void, Void>(){
+            @Override
+            protected Void doInBackground(Entry... entries) {
+                mDatabase.getEntryDao().delete(entries[0]);
+                Log.d(LOG_TAG, "Entry deleted");
+                return null;
+            }
+        }.execute(deletedEntry);
     }
 }

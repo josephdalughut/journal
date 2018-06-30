@@ -1,8 +1,11 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.edit;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -65,9 +68,6 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
         if(bundle != null && bundle.containsKey(ARGUMENT_ENTRY_ID)){
             mEntryId = bundle.getLong(ARGUMENT_ENTRY_ID);
         }
-
-        //inflate menu
-        toolbar.inflateMenu(R.menu.menu_entry);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -146,5 +146,43 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
     public void onStop() {
         super.onStop(); //save the entry when fragment is closed
         if(mPresenter != null) mPresenter.saveChanges();
+    }
+
+    @Override
+    public void showDeleteDialog() {
+        //show dialog to confirm delete
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.text_delete)
+                .setMessage(R.string.text_confirmation_delete_entry)
+                .setPositiveButton(R.string.text_delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mPresenter.onConfirmDeleteButtonClicked();
+                    }
+                }).setNegativeButton(R.string.text_back, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        dialogBuilder.show();
+    }
+
+    @Override
+    public void inflateOptionsMenu(int menuResId) {
+        //inflate menu
+        toolbar.inflateMenu(menuResId);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_delete:
+                        mPresenter.onDeleteButtonClicked();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 }
