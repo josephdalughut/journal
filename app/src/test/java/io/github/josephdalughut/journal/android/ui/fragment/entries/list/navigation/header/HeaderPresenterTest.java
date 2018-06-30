@@ -2,12 +2,13 @@ package io.github.josephdalughut.journal.android.ui.fragment.entries.list.naviga
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.internal.zzdwf;
+import com.google.android.gms.internal.firebase_auth.zzao;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,6 +82,11 @@ public class HeaderPresenterTest {
         mPresenter.initializeUi();
         //couldn't mock FirebaseUser, sorry.
         FirebaseUser firebaseUser = new FirebaseUser() {
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+
+            }
+
             @NonNull
             @Override
             public String getUid() {
@@ -112,18 +118,18 @@ public class HeaderPresenterTest {
 
             @NonNull
             @Override
-            public FirebaseUser zzap(@NonNull List<? extends UserInfo> list) {
+            public FirebaseUser zza(@NonNull List<? extends UserInfo> list) {
                 return null;
             }
 
             @Override
-            public FirebaseUser zzcc(boolean b) {
+            public FirebaseUser zzn() {
                 return null;
             }
 
             @NonNull
             @Override
-            public FirebaseApp zzbpn() {
+            public FirebaseApp zzo() {
                 return null;
             }
 
@@ -153,24 +159,24 @@ public class HeaderPresenterTest {
 
             @NonNull
             @Override
-            public zzdwf zzbpo() {
+            public zzao zzp() {
                 return null;
             }
 
             @Override
-            public void zza(@NonNull zzdwf zzdwf) {
+            public void zza(@NonNull zzao zzao) {
 
             }
 
             @NonNull
             @Override
-            public String zzbpp() {
+            public String zzq() {
                 return null;
             }
 
             @NonNull
             @Override
-            public String zzbpq() {
+            public String zzr() {
                 return null;
             }
 
@@ -193,6 +199,8 @@ public class HeaderPresenterTest {
         inOrder.verify(mView).showUnauthenticatedUserUi(false);
         inOrder.verify(mView).showAuthenticatedUserUi(true);
         inOrder.verify(mView).showLoadingProgress(false);
+        inOrder.verify(mView).showUserDetails(firebaseUser.getDisplayName(), firebaseUser.getEmail(),
+                firebaseUser.getPhotoUrl());
 
     }
 

@@ -61,6 +61,7 @@ public class EntriesPresenter implements EntriesContract.Presenter, Observer<Lis
             return;
         mView.showEntries(entries);
         mView.showLoadingProgress(false);
+        mView.showEmptyItemsPlaceholder(entries == null || entries.isEmpty());
     }
 
     @Override

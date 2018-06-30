@@ -66,11 +66,27 @@ public class EntriesPresenterTest {
 
         verify(mRepository).loadEntries(any(LifecycleOwner.class), mObserverCaptor.capture());
         List<Entry> stubEntries = new ArrayList<>();
+        stubEntries.add(new Entry());
 
         mObserverCaptor.getValue().onChanged(stubEntries);
 
         verify(mView).showEntries(stubEntries);
+        verify(mView).showEmptyItemsPlaceholder(false);
     }
+
+    @Test
+    public void onEntriesLoaded_onEmpty_showsEmptyPlaceholder(){
+        mPresenter.loadEntries(); //load entries
+
+        verify(mRepository).loadEntries(any(LifecycleOwner.class), mObserverCaptor.capture());
+        List<Entry> stubEntries = new ArrayList<>();
+
+        mObserverCaptor.getValue().onChanged(stubEntries);
+
+        verify(mView).showEntries(stubEntries);
+        verify(mView).showEmptyItemsPlaceholder(true);
+    }
+
 
     @Test
     public void onEntryItemSelected_showsEntryItem(){

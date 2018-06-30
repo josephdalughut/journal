@@ -27,6 +27,7 @@ public interface EntriesContract {
         public void showEntries(List<Entry> entries);
         public void showEntry(Long entryId);
         public void showSearchUi();
+        public void showEmptyItemsPlaceholder(boolean visible);
     }
 
     public interface Presenter {

@@ -47,6 +47,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                android:id="@+id/layEmpty"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/height_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_file_document_100"
+                    android:tint="#eee"
+                    android:layout_width="@dimen/height_button_double"
+                    android:layout_height="@dimen/height_button_double" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/margin_page"
+                    android:text="@string/text_info_empty_entries"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextSecondary"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    />
+
+            </LinearLayout>
 
         </FrameLayout>
 

@@ -55,6 +55,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     @BindView(R.id.laySwipeRefresh) public SwipeRefreshLayout laySwipeRefresh;
     @BindView(R.id.vwRecycler) public RecyclerView vwRecycler; //shows our entries
+    @BindView(R.id.layEmpty) public View layEmpty;
 
     @BindView(R.id.vwNavigation) public NavigationView vwNavigation;
 
@@ -148,5 +149,10 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
     @Override
     public void showSearchUi() {
 
+    }
+
+    @Override
+    public void showEmptyItemsPlaceholder(boolean visible) {
+        layEmpty.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 }
