@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "0.1.0" //use semantic versioning
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -36,7 +38,7 @@ android {
      */
     productFlavors {
         mock {
-            applicationIdSuffix = ".mock"
+//            applicationIdSuffix = ".mock"
             dimension "mock"
         }
         prod {}
@@ -44,7 +46,7 @@ android {
 
     // We don't need mockRelease, let's remove it
     android.variantFilter { variant ->
-        if(variant.buildType.name.equals('release')
+        if (variant.buildType.name.equals('release')
                 && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true)
         }
@@ -70,6 +72,7 @@ dependencies {
 
     //let's use butterkinfe for field/method binding, calling 'findViewById(...)' all the time gets exhausting
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //image loading
@@ -83,7 +86,6 @@ dependencies {
     // Robolectric for TDD, unit testing individual Android components
     testImplementation "org.robolectric:robolectric:3.8"
     testImplementation "org.robolectric:shadows-supportv4:3.8"
-
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:1.0.2"
@@ -113,4 +115,15 @@ dependencies {
     def lifecycle_version = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-firestore:17.0.2'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
+
+    implementation 'com.android.support:multidex:1.0.3'
+
 }
+
+apply plugin: 'com.google.gms.google-services'

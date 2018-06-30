@@ -1,5 +1,6 @@
 package io.github.josephdalughut.journal.android.ui.activity.main;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -52,4 +53,8 @@ public class MainActivity extends AppCompatActivity {
         addFragmentToUi(EntriesFragment.newInstance(), true);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

@@ -6,4 +6,7 @@
     <dimen name="radius_entry_edit">4dp</dimen>
     <dimen name="elevation_entry_edit">16dp</dimen>
     <dimen name="margin_page_half">8dp</dimen>
+    <dimen name="height_navigation_header">200dp</dimen>
+    <dimen name="height_entries_navigation_avatar">70dp</dimen>
+    <dimen name="height_button">48dp</dimen>
 </resources>

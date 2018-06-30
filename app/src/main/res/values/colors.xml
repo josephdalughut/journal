@@ -10,5 +10,6 @@
     <color name="bg_color_page">#eaf4ff</color>
     <color name="appDarkSecondary">#999999</color>
     <color name="colorTextPrimary">#222222</color>
+    <color name="colorTextSecondary">#666666</color>
 
 </resources>

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEditFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
 /**
@@ -53,6 +55,8 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     @BindView(R.id.laySwipeRefresh) public SwipeRefreshLayout laySwipeRefresh;
     @BindView(R.id.vwRecycler) public RecyclerView vwRecycler; //shows our entries
+
+    @BindView(R.id.vwNavigation) public NavigationView vwNavigation;
 
     private EntryAdapter mAdapter; //our adapter would handle displaying our entries in recyclerView
 
@@ -101,6 +105,10 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
         });
 
         ViewUtils.setDefaultRefreshColors(laySwipeRefresh);
+
+//        add header fragment
+        getChildFragmentManager().beginTransaction().replace(R.id.layNavigationHeaderFragmentContainer,
+                HeaderFragment.newInstance()).commitAllowingStateLoss();
 
         laySwipeRefresh.setEnabled(false);
         mPresenter.loadEntries();

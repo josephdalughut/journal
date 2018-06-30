@@ -9,16 +9,29 @@
 
     <include layout="@layout/lay_entries"/>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/vwNavigation"
-        android:layout_gravity="start"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/menu_entries_navigation"
-        app:headerLayout="@layout/lay_entries_navigation_header">
+        android:orientation="vertical"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/layNavigationHeaderFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_navigation_header"/>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/vwNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/menu_entries_navigation">
 
 
-    </android.support.design.widget.NavigationView>
+        </android.support.design.widget.NavigationView>
+
+    </LinearLayout>
+
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:clickable="true"
+    android:focusable="true" android:layout_width="match_parent"
+    android:layout_height="@dimen/height_navigation_header"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:id="@+id/layUnauthenticatedUser"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/margin_page"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="@dimen/height_entries_navigation_avatar"
+            android:layout_height="@dimen/height_entries_navigation_avatar"
+            android:src="@drawable/ic_account_circle"
+            />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:padding="@dimen/margin_page"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="@string/text_info_sign_in_navigation_header"
+                />
+
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btnSignIn"
+                android:layout_marginTop="@dimen/margin_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layAuthenticatedUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:padding="@dimen/margin_page">
+
+        <ImageView
+            android:id="@+id/imgUserAvatar"
+            android:layout_width="@dimen/height_entries_navigation_avatar"
+            android:layout_height="@dimen/height_entries_navigation_avatar"
+            android:src="@drawable/ic_account_circle"
+            />
+
+        <FrameLayout
+            android:padding="@dimen/margin_page"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:textColor="@android:color/white"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    />
+
+                <TextView
+                    android:id="@+id/txtUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:textColor="@android:color/white"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress"
+        android:visibility="invisible"
+        />
+
+</FrameLayout>
