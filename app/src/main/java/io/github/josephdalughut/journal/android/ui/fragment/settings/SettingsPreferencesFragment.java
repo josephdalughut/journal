@@ -55,6 +55,8 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat{
      */
     public static final String PREF_SYNC_ENABLED = "pref_sync_enabled";
 
+    private FirebaseSignInHelper mFirebaseSigninHelper;
+
     /**
      * Use this to create a new {@link SettingsPreferencesFragment}
      * @return a new {@link SettingsPreferencesFragment} instance
@@ -63,7 +65,6 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat{
         return new SettingsPreferencesFragment();
     }
 
-    private FirebaseSignInHelper mFirebaseSigninHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

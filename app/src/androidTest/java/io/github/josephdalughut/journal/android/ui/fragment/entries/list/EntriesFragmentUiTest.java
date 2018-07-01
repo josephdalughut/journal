@@ -44,15 +44,6 @@ public class EntriesFragmentUiTest {
     public ActivityTestRule<MainActivity> mActivityTestRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void setUp(){
-
-    }
-
-    @After
-    public void tearDown(){
-    }
-
     @Test
     public void showAddEntryUi_opensAddEntryUi() {
         // click the add entry ui

@@ -35,10 +35,6 @@ public class HeaderFragmentTest {
         mFragment = mFragmentController.create().start().resume().get();
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void showUnauthenticatedUserUi() {
         mFragment.showUnauthenticatedUserUi(true);

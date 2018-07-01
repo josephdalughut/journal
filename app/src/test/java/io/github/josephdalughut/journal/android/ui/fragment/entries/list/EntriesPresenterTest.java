@@ -44,10 +44,6 @@ public class EntriesPresenterTest {
         mPresenter = new EntriesPresenter(mView, mRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void checkNotNull(){
         assertNotNull(mPresenter.mView);

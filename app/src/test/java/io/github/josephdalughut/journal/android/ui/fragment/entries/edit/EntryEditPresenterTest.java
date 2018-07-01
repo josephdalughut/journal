@@ -43,10 +43,6 @@ public class EntryEditPresenterTest {
         mPresenter = new EntryEditPresenter(mView, mRepository); //create presenter instance
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void onBackButtonPressed_navigatesBack() {
         mPresenter.onBackButtonPressed();

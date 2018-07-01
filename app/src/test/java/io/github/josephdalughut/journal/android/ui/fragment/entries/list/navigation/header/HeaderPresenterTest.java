@@ -29,6 +29,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -54,10 +55,6 @@ public class HeaderPresenterTest {
         mPresenter = new HeaderPresenter(mView, mProvider); //initialize presenter
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void checkNotNull(){
         assertNotNull(mPresenter.mProvider);
@@ -73,119 +70,10 @@ public class HeaderPresenterTest {
     }
 
     @Test
-    public void onUserAccountProvided_showsAuthenticatedUserUi(){
+    public void onUserAccount_showsAuthedUserUi(){
         mPresenter.initializeUi();
         //couldn't mock FirebaseUser, sorry.
-        FirebaseUser firebaseUser = new FirebaseUser() {
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-
-            }
-
-            @NonNull
-            @Override
-            public String getUid() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public String getProviderId() {
-                return null;
-            }
-
-            @Override
-            public boolean isAnonymous() {
-                return false;
-            }
-
-            @Nullable
-            @Override
-            public List<String> getProviders() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<? extends UserInfo> getProviderData() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public FirebaseUser zza(@NonNull List<? extends UserInfo> list) {
-                return null;
-            }
-
-            @Override
-            public FirebaseUser zzn() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public FirebaseApp zzo() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public String getDisplayName() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Uri getPhotoUrl() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public String getEmail() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public String getPhoneNumber() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public zzao zzp() {
-                return null;
-            }
-
-            @Override
-            public void zza(@NonNull zzao zzao) {
-
-            }
-
-            @NonNull
-            @Override
-            public String zzq() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public String zzr() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public FirebaseUserMetadata getMetadata() {
-                return null;
-            }
-
-            @Override
-            public boolean isEmailVerified() {
-                return false;
-            }
-        };
+        FirebaseUser firebaseUser = mock(FirebaseUser.class);
         verify(mProvider).getSignedInUser(mUserCallbackCaptor.capture());
         mUserCallbackCaptor.getValue().onUserAccountProvided(firebaseUser);
 

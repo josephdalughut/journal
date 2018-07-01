@@ -31,14 +31,14 @@ import static org.mockito.Mockito.verify;
  */
 public class EntrySearchPresenterTest {
 
-    @Mock EntrySearchContract.View mView;
-    @Mock EntriesRepository mRepository;
+    @Mock private EntrySearchContract.View mView;
+    @Mock private EntriesRepository mRepository;
     @Captor private ArgumentCaptor<Observer<List<Entry>>> mObserverCaptor;
 
     private EntrySearchPresenter mPresenter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         mPresenter = new EntrySearchPresenter(mView, mRepository);
     }

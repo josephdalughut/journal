@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,15 +38,6 @@ public class EntrySearchFragment extends Fragment implements EntrySearchContract
 
     private static final String LOG_TAG = EntrySearchFragment.class.getSimpleName();
 
-    /**
-     * Use this instead of the default constructor to create an {@link EntrySearchFragment instance}
-     * @return a new {@link EntrySearchFragment} instance.
-     */
-    public static EntrySearchFragment newInstance(){
-        return new EntrySearchFragment();
-    }
-
-
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.btnBack) public ImageButton btnBack;
     @BindView(R.id.edtSearch) public EditText edtSearch;
@@ -57,7 +49,15 @@ public class EntrySearchFragment extends Fragment implements EntrySearchContract
 
     private EntryAdapter mAdapter; //our adapter would handle displaying our entries in recyclerView
 
-    EntrySearchContract.Presenter mPresenter;
+    private EntrySearchContract.Presenter mPresenter;
+
+    /**
+     * Use this instead of the default constructor to create an {@link EntrySearchFragment instance}
+     * @return a new {@link EntrySearchFragment} instance.
+     */
+    public static EntrySearchFragment newInstance(){
+        return new EntrySearchFragment();
+    }
 
     @Override
     public void onCreateView(Bundle savedInstanceState) {
@@ -178,7 +178,10 @@ public class EntrySearchFragment extends Fragment implements EntrySearchContract
     }
 
     @Override
-    public void showSearchUi() { }
+    public void showSearchUi() {
+        Log.d(LOG_TAG, "No search implementation");
+        return;
+    }
 
     @Override
     public void showEmptyItemsPlaceholder(boolean visible) {

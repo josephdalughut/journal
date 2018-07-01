@@ -42,15 +42,6 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     private static final String LOG_TAG = EntriesFragment.class.getSimpleName();
 
-    /**
-     * Use this instead of the default constructor to create an {@link EntriesFragment instance}
-     * @return a new {@link EntriesFragment} instance.
-     */
-    public static EntriesFragment newInstance(){
-        return new EntriesFragment();
-    }
-
-
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.layDrawer) public DrawerLayout layDrawer;
 
@@ -64,7 +55,15 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     private EntryAdapter mAdapter; //our adapter would handle displaying our entries in recyclerView
 
-    EntriesContract.Presenter mPresenter;
+    private EntriesContract.Presenter mPresenter;
+
+    /**
+     * Use this instead of the default constructor to create an {@link EntriesFragment instance}
+     * @return a new {@link EntriesFragment} instance.
+     */
+    public static EntriesFragment newInstance(){
+        return new EntriesFragment();
+    }
 
     @Override
     public void onCreateView(Bundle savedInstanceState) {
@@ -91,8 +90,9 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
                     case R.id.nav_search:
                         mPresenter.onSearchButtonClicked();
                         return true;
+                        default:
+                            return false;
                 }
-                return false;
             }
         });
         vwNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

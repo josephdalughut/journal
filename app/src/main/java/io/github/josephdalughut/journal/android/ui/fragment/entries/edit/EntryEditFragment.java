@@ -27,6 +27,18 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
 
     private static final String ARGUMENT_ENTRY_ID = "entryId";
 
+    @BindView(R.id.btnBack) public ImageButton btnBack;
+    @BindView(R.id.toolbar) public Toolbar toolbar;
+
+    @BindView(R.id.edtEntryTitle) public EditText edtEntryTitle;
+    @BindView(R.id.edtEntryContent) public EditText edtEntryContent;
+
+    @BindView(R.id.laySwipeRefresh) public SwipeRefreshLayout laySwipeRefresh;
+    @BindView(R.id.vwContent) public View vwContent;
+
+    EntryEditContract.Presenter mPresenter;
+    private Long mEntryId; //entry to either create or edit
+
     /**
      * @return a new {@link EntryEditFragment} instance.
      */
@@ -47,18 +59,6 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
         return fragment;
     }
 
-    @BindView(R.id.btnBack) public ImageButton btnBack;
-    @BindView(R.id.toolbar) public Toolbar toolbar;
-
-    @BindView(R.id.edtEntryTitle) public EditText edtEntryTitle;
-    @BindView(R.id.edtEntryContent) public EditText edtEntryContent;
-
-    @BindView(R.id.laySwipeRefresh) public SwipeRefreshLayout laySwipeRefresh;
-    @BindView(R.id.vwContent) public View vwContent;
-
-    EntryEditContract.Presenter mPresenter;
-    private Long mEntryId; //entry to either create or edit
-
     @Override
     public void onCreateView(Bundle savedInstanceState) {
 
@@ -74,7 +74,7 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v == btnBack){
+                if(v.equals(btnBack)){
                     mPresenter.onBackButtonPressed();
                 }
             }
@@ -180,8 +180,9 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
                     case R.id.nav_delete:
                         mPresenter.onDeleteButtonClicked();
                         return true;
+                        default:
+                            return false;
                 }
-                return false;
             }
         });
     }
