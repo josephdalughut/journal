@@ -1,6 +1,7 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -70,8 +71,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
         //setup adapter and recyclerView
         mAdapter = new EntryAdapter(this);
-        vwRecycler.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)); //stagger our items
+        setupAdapterLayoutManager();
 
         //items should be decorated with custom padding
         vwRecycler.addItemDecoration(new PaddingItemDecoration(
@@ -89,7 +89,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_search:
-                        getMainActivity().addFragmentToUi(SearchEntriesFragment.newInstance(), false);
+                        mPresenter.onSearchButtonClicked();
                         return true;
                 }
                 return false;
@@ -173,11 +173,28 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     @Override
     public void showSearchUi() {
-
+        getMainActivity().addFragmentToUi(SearchEntriesFragment.newInstance(), false);
     }
 
     @Override
     public void showEmptyItemsPlaceholder(boolean visible) {
         layEmpty.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    //sets the layout manager to show two or three columns in portrait or landscape respectively
+    private void setupAdapterLayoutManager(){
+        if(mAdapter == null || vwRecycler == null) return;
+
+        int currentOrientation = getResources().getConfiguration().orientation;
+        boolean landscape = currentOrientation == Configuration.ORIENTATION_LANDSCAPE;
+        vwRecycler.setLayoutManager(new StaggeredGridLayoutManager(landscape ? 3 : 2,
+                StaggeredGridLayoutManager.VERTICAL)); //stagger our items
+    }
+
+    //we'll change the layout manager to show three rows here
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setupAdapterLayoutManager();
     }
 }
