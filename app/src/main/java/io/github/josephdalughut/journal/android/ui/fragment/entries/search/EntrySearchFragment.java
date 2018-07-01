@@ -33,16 +33,16 @@ import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
  * Displays a list of type {@link Entry}
  * belonging to the current user
  */
-public class SearchEntriesFragment extends Fragment implements EntrySearchContract.View, EntryAdapter.EntrySelectCallback {
+public class EntrySearchFragment extends Fragment implements EntrySearchContract.View, EntryAdapter.EntrySelectCallback {
 
-    private static final String LOG_TAG = SearchEntriesFragment.class.getSimpleName();
+    private static final String LOG_TAG = EntrySearchFragment.class.getSimpleName();
 
     /**
-     * Use this instead of the default constructor to create an {@link SearchEntriesFragment instance}
-     * @return a new {@link SearchEntriesFragment} instance.
+     * Use this instead of the default constructor to create an {@link EntrySearchFragment instance}
+     * @return a new {@link EntrySearchFragment} instance.
      */
-    public static SearchEntriesFragment newInstance(){
-        return new SearchEntriesFragment();
+    public static EntrySearchFragment newInstance(){
+        return new EntrySearchFragment();
     }
 
 

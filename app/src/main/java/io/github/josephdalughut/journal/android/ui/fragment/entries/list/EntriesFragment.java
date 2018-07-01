@@ -25,7 +25,7 @@ import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEd
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
-import io.github.josephdalughut.journal.android.ui.fragment.entries.search.SearchEntriesFragment;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.search.EntrySearchFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
@@ -100,6 +100,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_settings:
+                        layDrawer.closeDrawers();
                         getMainActivity().addFragmentToUi(SettingsFragment.newInstance(), false);
                         return true;
                 }
@@ -173,7 +174,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     @Override
     public void showSearchUi() {
-        getMainActivity().addFragmentToUi(SearchEntriesFragment.newInstance(), false);
+        getMainActivity().addFragmentToUi(EntrySearchFragment.newInstance(), false);
     }
 
     @Override

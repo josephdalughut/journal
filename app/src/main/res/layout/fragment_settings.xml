@@ -16,6 +16,7 @@
         app:navigationIcon="@drawable/ic_action_arrow_back"
         app:titleTextColor="@android:color/white"
         app:title="@string/text_settings"
+        android:contentDescription="@string/text_settings"
         >
 
 

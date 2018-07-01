@@ -1,9 +1,13 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
 
+import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.contrib.DrawerMatchers;
+import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.view.Gravity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +20,7 @@ import io.github.josephdalughut.journal.android.ui.activity.main.MainActivity;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static org.junit.Assert.*;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -30,7 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class EntriesFragmentTest {
+public class EntriesFragmentUiTest {
 
     /**
      * Launches our {@link MainActivity} under test
@@ -56,4 +61,31 @@ public class EntriesFragmentTest {
         //check if view in AddEntry fragment is displayed
         onView(withId(R.id.edtEntryTitle)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void onSettingsNavigationItemClicked_showsSettingsScreen(){
+
+        //open the drawer
+        onView(withId(R.id.layDrawer))
+                .perform(DrawerActions.open(Gravity.LEFT));
+
+        //click settings item
+        onView(withId(R.id.vwNavigation))
+                .perform(NavigationViewActions.navigateTo(R.id.nav_settings));
+
+        //verify settings screen shown
+        onView(withContentDescription(R.string.text_settings))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void showSearchUi_opensSearchUi(){
+        //click the search menu item
+        onView(withId(R.id.nav_search)).perform(click());
+
+        //check if search ui is shown
+        onView(withId(R.id.edtSearch)).check(matches(isDisplayed()));
+    }
+
+
 }

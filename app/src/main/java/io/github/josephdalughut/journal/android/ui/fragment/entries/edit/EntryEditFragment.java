@@ -75,7 +75,7 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
             @Override
             public void onClick(View v) {
                 if(v == btnBack){
-                    getActivity().onBackPressed(); //back navigation
+                    mPresenter.onBackButtonPressed();
                 }
             }
         };
