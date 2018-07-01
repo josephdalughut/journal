@@ -3,7 +3,6 @@ package io.github.josephdalughut.journal.android.data.models.entry;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -69,9 +68,8 @@ public class Entry extends io.github.josephdalughut.journal.android.data.models.
         return firebase_user_id;
     }
 
-    public Entry setFirebase_user_id(String firebase_user_id) {
+    public void setFirebase_user_id(String firebase_user_id) {
         this.firebase_user_id = firebase_user_id;
-        return this;
     }
 
     public boolean isSynced() {
@@ -95,6 +93,9 @@ public class Entry extends io.github.josephdalughut.journal.android.data.models.
         return user.getUid() + "_" + entryId;
     }
 
+    /**
+     * @see #getFirebaseId(FirebaseUser, Long)
+     */
     public static String getFirebaseId(FirebaseUser user, Entry entry){
         return getFirebaseId(user, entry.getId());
     }

@@ -3,7 +3,6 @@ package io.github.josephdalughut.journal.android.data.database.converters;
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.TypeConverter;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +22,7 @@ import java.util.Date;
 @SuppressLint("SimpleDateFormat")
 public class DateConverter {
 
-    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     //room would use this to convert a string timestamp to a Date object
     @TypeConverter

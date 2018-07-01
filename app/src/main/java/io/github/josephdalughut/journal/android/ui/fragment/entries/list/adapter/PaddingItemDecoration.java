@@ -9,10 +9,12 @@ import android.view.View;
  * <a href="http://joeydalu.herokuapp.com">joeydalu.herokuapp.com</a>
  * JournalApp
  * 30/06/2018
+ *
+ * An {@link android.support.v7.widget.RecyclerView.ItemDecoration} that pads gridview items.
  */
 public class PaddingItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int mSpacing;
+    private int mSpacing; //we'll space out items by this much
 
     public PaddingItemDecoration(int spacing) {
         this.mSpacing = spacing;

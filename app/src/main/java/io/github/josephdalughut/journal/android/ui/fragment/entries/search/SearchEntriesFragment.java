@@ -2,19 +2,12 @@ package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,13 +19,9 @@ import io.github.josephdalughut.journal.android.R;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEditFragment;
-import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesContract;
-import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesPresenter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesRepositoryImpl;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
-import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
-import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
 /**
@@ -71,12 +60,7 @@ public class SearchEntriesFragment extends Fragment implements EntrySearchContra
     EntrySearchContract.Presenter mPresenter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateView() {
+    public void onCreateView(Bundle savedInstanceState) {
 
         //setup adapter and recyclerView
         mAdapter = new EntryAdapter(this);

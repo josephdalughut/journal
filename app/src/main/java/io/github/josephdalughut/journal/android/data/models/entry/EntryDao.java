@@ -9,8 +9,6 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import io.github.josephdalughut.journal.android.data.models.EntityDao;
-
 /**
  * Joey Dalu (Joseph Dalughut)
  * <a href="http://joeydalu.herokuapp.com">joeydalu.herokuapp.com</a>
@@ -18,9 +16,13 @@ import io.github.josephdalughut.journal.android.data.models.EntityDao;
  * 29/06/2018
  *
  * Data Access Object for {@link Entry} model.
+ * @see <a href="https://developer.android.com/training/data-storage/room/accessing-data">
+ *     Accessing data using Room DAOs
+ *     </a>
  */
+
 @Dao
-public interface EntryDao extends EntityDao{
+public interface EntryDao {
 
     /**
      * @return a collection of all {@link Entry}(ies) in the database.

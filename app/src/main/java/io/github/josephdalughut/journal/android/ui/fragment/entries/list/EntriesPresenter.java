@@ -1,6 +1,5 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 

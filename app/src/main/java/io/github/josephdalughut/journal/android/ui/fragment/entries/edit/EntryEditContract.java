@@ -1,7 +1,5 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.edit;
 
-import io.github.josephdalughut.journal.android.data.models.entry.Entry;
-
 /**
  * Joey Dalu (Joseph Dalughut)
  * <a href="http://joeydalu.herokuapp.com">joeydalu.herokuapp.com</a>
@@ -12,25 +10,25 @@ import io.github.josephdalughut.journal.android.data.models.entry.Entry;
  */
 public interface EntryEditContract {
 
-    public interface View {
-        public void navigateBack();
-        public void showLoadingProgress(boolean visible);
-        public void showContentUi(boolean visible);
-        public void setEntryTitle(String title);
-        public void setEntryContent(String content);
-        public void showDeleteDialog();
-        public void inflateOptionsMenu(int menuResId);
+    interface View {
+        void navigateBack();
+        void showLoadingProgress(boolean visible);
+        void showContentUi(boolean visible);
+        void setEntryTitle(String title);
+        void setEntryContent(String content);
+        void showDeleteDialog();
+        void inflateOptionsMenu(int menuResId);
     }
 
-    public interface Presenter {
+    interface Presenter {
 
-        public void onBackButtonPressed();
-        public void saveChanges();
-        public void loadEntry(Long entryId);
-        public void onEntryTitleChanged(String newTitle);
-        public void onEntryContentChanged(String content);
-        public void onDeleteButtonClicked();
-        public void onConfirmDeleteButtonClicked();
+        void onBackButtonPressed();
+        void saveChanges();
+        void loadEntry(Long entryId);
+        void onEntryTitleChanged(String newTitle);
+        void onEntryContentChanged(String content);
+        void onDeleteButtonClicked();
+        void onConfirmDeleteButtonClicked();
 
     }
 

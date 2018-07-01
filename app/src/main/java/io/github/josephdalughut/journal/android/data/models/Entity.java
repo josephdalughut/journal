@@ -23,17 +23,15 @@ public class Entity {
         return createdAt;
     }
 
-    public Entity setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-        return this;
     }
 
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public Entity setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-        return this;
     }
 }

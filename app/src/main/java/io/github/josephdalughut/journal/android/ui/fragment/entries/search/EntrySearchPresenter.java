@@ -1,6 +1,5 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
 
-import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesContract;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesPresenter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesRepository;
 
@@ -14,7 +13,7 @@ public class EntrySearchPresenter extends EntriesPresenter implements EntrySearc
 
     private EntrySearchContract.View mView;
 
-    public EntrySearchPresenter(EntrySearchContract.View view, EntriesRepository repository) {
+    EntrySearchPresenter(EntrySearchContract.View view, EntriesRepository repository) {
         super(view, repository);
         this.mView = view;
     }

@@ -11,19 +11,19 @@ import com.google.firebase.auth.FirebaseUser;
  * JournalApp
  * 30/06/2018
  *
- * A simple user interface providing the account of the Logged in user
+ * A simple interface for handling the users Firebase account
  */
 public interface FirebaseUserAccountProvider {
 
-    public void getLoggedInUser(UserAccountCallback callback);
-    public void loginUser(GoogleSignInAccount googleSignInAccount, OnCompleteListener<AuthResult> onCompleteListener);
-    public void logout();
+    void getSignedInUser(UserAccountCallback callback);
+    void signInUser(GoogleSignInAccount googleSignInAccount, OnCompleteListener<AuthResult> onCompleteListener);
+    void signOut();
 
     /**
      * Simple callback for logged in firebase user.
      */
-    public interface UserAccountCallback {
-        public void onUserAccountProvided(FirebaseUser firebaseUser);
+    interface UserAccountCallback {
+        void onUserAccountProvided(FirebaseUser firebaseUser);
     }
 
 }

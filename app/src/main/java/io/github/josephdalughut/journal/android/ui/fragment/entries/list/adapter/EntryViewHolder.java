@@ -23,7 +23,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.txtTitle) public TextView txtTitle;
     @BindView(R.id.txtContent) public TextView txtContent;
 
-    public EntryViewHolder(View itemView) {
+    EntryViewHolder(View itemView) {
         super(itemView);
 
         //bind with butterknife

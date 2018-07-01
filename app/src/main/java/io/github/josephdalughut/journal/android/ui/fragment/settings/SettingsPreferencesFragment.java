@@ -159,7 +159,7 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat{
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     //we'll sign in here
-                    mFirebaseSigninHelper.signInWithGoogle();
+                    mFirebaseSigninHelper.authenticateWithGoogle();
                     return true;
                 }
             });
@@ -230,7 +230,7 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat{
                 Log.d(LOG_TAG, "Google sign in success");
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(LOG_TAG, "Account: "+account.getEmail());
-                mFirebaseSigninHelper.loginToFirebase(account, new OnCompleteListener<AuthResult>() {
+                mFirebaseSigninHelper.signInToFirebase(account, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(getActivity() == null) return;

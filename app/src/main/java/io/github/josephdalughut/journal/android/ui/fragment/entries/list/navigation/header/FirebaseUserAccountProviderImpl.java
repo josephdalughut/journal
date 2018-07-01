@@ -29,21 +29,21 @@ public class FirebaseUserAccountProviderImpl implements FirebaseUserAccountProvi
     }
 
     @Override
-    public void getLoggedInUser(final UserAccountCallback callback) {
+    public void getSignedInUser(final UserAccountCallback callback) {
         callback.onUserAccountProvided(mAuth.getCurrentUser());
     }
 
     @Override
-    public void loginUser(GoogleSignInAccount googleSignInAccount, OnCompleteListener<AuthResult> onCompleteListener) {
+    public void signInUser(GoogleSignInAccount googleSignInAccount, OnCompleteListener<AuthResult> onCompleteListener) {
         Log.d(LOG_TAG, "Logging in user");
         AuthCredential credential = GoogleAuthProvider
-                .getCredential(googleSignInAccount.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
+                .getCredential(googleSignInAccount.getIdToken(), null); //get google credential
+        mAuth.signInWithCredential(credential)  //sign in with google
                 .addOnCompleteListener(onCompleteListener);
     }
 
     @Override
-    public void logout() {
+    public void signOut() {
         mAuth.signOut();
     }
 }

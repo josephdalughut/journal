@@ -17,7 +17,8 @@ import io.github.josephdalughut.journal.android.data.models.entry.Entry;
  * JournalApp
  * 29/06/2018
  *
- * An adapter which shows a list of {@link Entry}ies in a {@link RecyclerView}
+ * An adapter which shows a list of entries in a {@link RecyclerView}
+ * @see Entry
  * @see RecyclerView.Adapter
  *
  */
@@ -64,7 +65,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryViewHolder> {
     }
 
     public interface EntrySelectCallback {
-        public void onEntrySelected(Entry entry);
+        void onEntrySelected(Entry entry);
     }
 
 }

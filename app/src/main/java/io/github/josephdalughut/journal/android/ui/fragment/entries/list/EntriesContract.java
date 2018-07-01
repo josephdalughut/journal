@@ -21,20 +21,20 @@ public interface EntriesContract {
      * Our view implementation here would typically be a {@link android.support.v4.app.Fragment},
      * which already is a {@link LifecycleOwner}
      */
-    public interface View extends LifecycleOwner {
-        public void showAddEntryUi();
-        public void showLoadingProgress(boolean visible);
-        public void showEntries(List<Entry> entries);
-        public void showEntry(Long entryId);
-        public void showSearchUi();
-        public void showEmptyItemsPlaceholder(boolean visible);
+    interface View extends LifecycleOwner {
+        void showAddEntryUi();
+        void showLoadingProgress(boolean visible);
+        void showEntries(List<Entry> entries);
+        void showEntry(Long entryId);
+        void showSearchUi();
+        void showEmptyItemsPlaceholder(boolean visible);
     }
 
-    public interface Presenter {
-        public void onAddEntryButtonClicked();
-        public void loadEntries();
-        public void onEntryItemSelected(Entry entry);
-        public void onSearchButtonClicked();
+    interface Presenter {
+        void onAddEntryButtonClicked();
+        void loadEntries();
+        void onEntryItemSelected(Entry entry);
+        void onSearchButtonClicked();
     }
 
 }

@@ -10,16 +10,16 @@ import io.github.josephdalughut.journal.android.ui.fragment.entries.list.Entries
  */
 public interface EntrySearchContract {
 
-    public interface View extends EntriesContract.View {
-        public void clearSearch();
-        public void navigateBack();
-        public void showCloseSearchButton(boolean visible);
+    interface View extends EntriesContract.View {
+        void clearSearch();
+        void navigateBack();
+        void showCloseSearchButton(boolean visible);
     }
 
     public interface Presenter extends EntriesContract.Presenter {
-        public void onBackButtonPressed();
-        public void onClearSearchButtonClicked();
-        public void loadEntries(String searchQuery);
+        void onBackButtonPressed();
+        void onClearSearchButtonClicked();
+        void loadEntries(String searchQuery);
     }
 
 }

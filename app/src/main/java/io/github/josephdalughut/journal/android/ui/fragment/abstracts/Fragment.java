@@ -3,7 +3,6 @@ package io.github.josephdalughut.journal.android.ui.fragment.abstracts;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
         ButterKnife.bind(this, mRootView);
 
         //tell subclasses view has been created
-        onCreateView();
+        onCreateView(savedInstanceState);
 
         //finally, return the root view
         return mRootView;
@@ -50,7 +49,7 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
      * This method would be called once the fragments view has been inflated. It's safe to find and
      * handle views here.
      */
-    public abstract void onCreateView();
+    public abstract void onCreateView(Bundle savedInstanceState);
 
     /**
      * @return the resource id to the layout for this fragment.

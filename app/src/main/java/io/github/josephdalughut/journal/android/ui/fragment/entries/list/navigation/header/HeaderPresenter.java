@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
 
 /**
  * Joey Dalu (Joseph Dalughut)
@@ -26,7 +25,7 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
     protected HeaderContract.View mView; //view impl
     protected FirebaseUserAccountProvider mProvider; //provides us with user account details
 
-    public HeaderPresenter(HeaderContract.View mView, FirebaseUserAccountProvider mProvider) {
+    HeaderPresenter(HeaderContract.View mView, FirebaseUserAccountProvider mProvider) {
         this.mView = mView;
         this.mProvider = mProvider;
     }
@@ -37,7 +36,7 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
         mView.showLoadingProgress(true);
         mView.showAuthenticatedUserUi(false);
         mView.showUnauthenticatedUserUi(false);
-        mProvider.getLoggedInUser(this);
+        mProvider.getSignedInUser(this);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
             mView.showLoadingProgress(false);
             return;
         }
-        mProvider.loginUser(account, this);
+        mProvider.signInUser(account, this);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
         if(mView == null) return;
         if(task.isSuccessful()){
             Log.d(LOG_TAG, "Sign in success");
-            mProvider.getLoggedInUser(this);
+            mProvider.getSignedInUser(this);
             mView.startFirebaseSync();
         }else{
             Log.d(LOG_TAG, "Sign in exception");

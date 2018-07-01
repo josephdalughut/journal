@@ -2,7 +2,6 @@ package io.github.josephdalughut.journal.android.data.database;
 
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
@@ -17,21 +16,29 @@ import io.github.josephdalughut.journal.android.data.models.entry.EntryDao;
  * JournalApp
  * 29/06/2018
  *
- * Default database for the application
+ * Room database implementation for local persistence.
+ * @see RoomDatabase
+ * @see <a href="https://developer.android.com/topic/libraries/architecture/room">Official Room Docs</a>
  */
+
 @android.arch.persistence.room.Database(
-        entities = {Entry.class},
+        entities = { Entry.class },
         version = 1,
         exportSchema = false
 )
 @TypeConverters({ DateConverter.class })
 public abstract class Database extends RoomDatabase {
 
-    private static final String LOG_TAG = Database.class.getSimpleName();
+    private static final String LOG_TAG = Database.class.getSimpleName(); //for logging
 
     private static final Object LOCK = new Object();
-    private static final String DB_NAME = "journalbase";
-    private static Database sInstance;
+    private static final String DB_NAME = "journalbase"; //db title
+    private static Database sInstance; //singleton instance
+
+    /**
+     * Use {@link #getInstance(Context)} instead
+     */
+    private Database(){}
 
     /**
      * @return a singleton {@link Database} instance.

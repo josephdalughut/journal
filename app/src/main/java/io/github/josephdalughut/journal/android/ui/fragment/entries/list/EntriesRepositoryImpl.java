@@ -6,9 +6,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import java.util.List;
 

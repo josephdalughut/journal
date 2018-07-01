@@ -1,12 +1,8 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -30,7 +26,6 @@ import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.search.SearchEntriesFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
-import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPreferencesFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
 /**
@@ -71,12 +66,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
     EntriesContract.Presenter mPresenter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateView() {
+    public void onCreateView(Bundle savedInstanceState) {
 
         //setup adapter and recyclerView
         mAdapter = new EntryAdapter(this);
@@ -142,7 +132,6 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
                 HeaderFragment.newInstance()).commitAllowingStateLoss();
 
         laySwipeRefresh.setEnabled(false);
-
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,8 +52,6 @@ public class HeaderFragment extends Fragment implements HeaderContract.View {
     private HeaderPresenter mPresenter;
     private FirebaseSignInHelper mFirebaseSignInHelper;
 
-    private FirebaseUserAccountProvider mFirebaseAccountProvider;
-
     private BroadcastReceiver mGoogleSigninBroadcastReceiver;
 
     /**
@@ -63,9 +62,11 @@ public class HeaderFragment extends Fragment implements HeaderContract.View {
     }
 
     @Override
-    public void onCreateView() {
-        mFirebaseAccountProvider = new FirebaseUserAccountProviderImpl();
-        mPresenter = new HeaderPresenter(this, mFirebaseAccountProvider);
+    public void onCreateView(Bundle savedInstanceState) {
+
+        FirebaseUserAccountProvider firebaseAccountProvider = new FirebaseUserAccountProviderImpl();
+
+        mPresenter = new HeaderPresenter(this, firebaseAccountProvider);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +75,7 @@ public class HeaderFragment extends Fragment implements HeaderContract.View {
             }
         });
 
-        mFirebaseSignInHelper = new FirebaseSignInHelper(this, mFirebaseAccountProvider, RC_SIGN_IN);
+        mFirebaseSignInHelper = new FirebaseSignInHelper(this, firebaseAccountProvider, RC_SIGN_IN);
 
         // listen for sign-in changes to update ui
         mGoogleSigninBroadcastReceiver = new BroadcastReceiver() {
@@ -126,7 +127,7 @@ public class HeaderFragment extends Fragment implements HeaderContract.View {
 
     @Override
     public void showLoginUi() {
-        mFirebaseSignInHelper.signInWithGoogle();
+        mFirebaseSignInHelper.authenticateWithGoogle();
     }
 
     @Override
@@ -159,7 +160,7 @@ public class HeaderFragment extends Fragment implements HeaderContract.View {
     public void showUserDetails(String displayName, String emailAddress, Uri photoUri) {
         txtUserName.setText(displayName);
         txtUserEmail.setText(emailAddress);
-        if(photoUri != null ) {
+        if(photoUri != null ) { //load users avatar
             Picasso.with(getContext())
                     .load(photoUri.toString())
                     .placeholder(R.drawable.ic_account_circle)

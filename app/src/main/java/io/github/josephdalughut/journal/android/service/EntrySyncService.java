@@ -6,23 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import io.github.josephdalughut.journal.android.data.database.Database;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
@@ -34,14 +29,13 @@ import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPre
  * JournalApp
  * 30/06/2018
  *
- * A service which runs backing up and deleting
- * {@link Entry}
- * to firestore
+ * A service for syncing entries to firebase
+ * @see Entry
  */
 @SuppressLint("StaticFieldLeak")
 public class EntrySyncService extends IntentService {
 
-    private static final String LOG_TAG = EntrySyncService.class.getSimpleName();
+    private static final String TAG = EntrySyncService.class.getSimpleName();
 
     /**
      * Used to specify the action to be performed by the service. Can be one of:
@@ -51,15 +45,11 @@ public class EntrySyncService extends IntentService {
      *     </li>
      * </ul>
      */
-    public static final String EXTRA_FIRESTORE_ACTION = "ACTION";
+    public static final String EXTRA_FIRESTORE_ACTION = TAG + ".ACTION";
 
 
-    public static final String ACTION_SYNC = "SYNC";
+    public static final String ACTION_SYNC = TAG + ".SYNC";
 
-    /**
-     * Should be passed as an extra in an intent with action {@link #ACTION_SYNC}
-     */
-    public static final String EXTRA_ENTRY_ID = "ENTRY.ID";
 
     private FirebaseAuth mAuth;
     private Database mDbInstance;
@@ -72,6 +62,8 @@ public class EntrySyncService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //initialize variables
         mAuth = FirebaseAuth.getInstance();
         mDbInstance = Database.getInstance(this);
         mFirestoreInstance = FirebaseFirestore.getInstance();
@@ -86,24 +78,24 @@ public class EntrySyncService extends IntentService {
         // We shouldn't sync if it isn't enabled
         boolean isSyncEnabled = preferences.getBoolean(SettingsPreferencesFragment.PREF_SYNC_ENABLED, true);
         if(!isSyncEnabled){
-            Log.d(LOG_TAG, "Sync disabled, exiting");
+            Log.d(TAG, "Sync disabled, exiting");
             stopSelf();
             return;
         }
 
         if(intent == null || !intent.hasExtra(EXTRA_FIRESTORE_ACTION)){
-            Log.d(LOG_TAG, "No action specified, returning");
+            Log.d(TAG, "No action specified, returning");
             stopSelf(); //tell service to quit
             return;
         }
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if(firebaseUser == null){
-            Log.d(LOG_TAG, "No user signed in, stopping service");
+            Log.d(TAG, "No user signed in, stopping service");
             stopSelf();
             return;
         }
-        Log.d(LOG_TAG, "User signed in: "+ firebaseUser.getEmail());
+        Log.d(TAG, "User signed in: "+ firebaseUser.getEmail());
 
         String action = intent.getStringExtra(EXTRA_FIRESTORE_ACTION);
         if(action.matches(ACTION_SYNC)){
@@ -113,7 +105,7 @@ public class EntrySyncService extends IntentService {
     }
 
     private void performSync(FirebaseUser firebaseUser){
-        Log.d(LOG_TAG, "Starting sync");
+        Log.d(TAG, "Starting sync");
         mFirestoreInstance.collection(Entry.FIREBASE_COLLECTION_NAME)
                 .whereEqualTo("firebase_user_id", firebaseUser.getUid())
                 .get()
@@ -122,7 +114,7 @@ public class EntrySyncService extends IntentService {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
                         if(!snapshots.isEmpty()){
-                            Log.d(LOG_TAG, "Number of entries synced "+snapshots.size());
+                            Log.d(TAG, "Number of entries synced "+snapshots.size());
                             List<Entry> entries = new ArrayList<>();
                             for (DocumentSnapshot documentSnapshot: snapshots){
                                 Entry entry = documentSnapshot.toObject(Entry.class);
@@ -141,9 +133,9 @@ public class EntrySyncService extends IntentService {
                                 }
                             }.execute(entries);
                         }else{
-                            Log.d(LOG_TAG, "No entries found");
+                            Log.d(TAG, "No entries found");
                         }
-                        Log.d(LOG_TAG, "Sync finished");
+                        Log.d(TAG, "Sync finished");
                     }
                 });
     }

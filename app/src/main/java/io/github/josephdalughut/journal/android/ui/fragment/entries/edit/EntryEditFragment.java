@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 
 import butterknife.BindView;
 import io.github.josephdalughut.journal.android.R;
-import io.github.josephdalughut.journal.android.data.database.Database;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
 
@@ -22,7 +21,7 @@ import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
  * JournalApp
  * 29/06/2018
  *
- * Fragment view for adding / editing an {@link EntryEditFragment}
+ * Fragment view for adding / editing an {@link Entry}
  */
 public class EntryEditFragment extends Fragment implements EntryEditContract.View {
 
@@ -61,13 +60,16 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
     private Long mEntryId; //entry to either create or edit
 
     @Override
-    public void onCreateView() {
+    public void onCreateView(Bundle savedInstanceState) {
 
         //get entry id
         Bundle bundle = getArguments();
         if(bundle != null && bundle.containsKey(ARGUMENT_ENTRY_ID)){
             mEntryId = bundle.getLong(ARGUMENT_ENTRY_ID);
         }
+
+        //disable refresh
+        laySwipeRefresh.setEnabled(false);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -77,8 +79,6 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
                 }
             }
         };
-
-        laySwipeRefresh.setEnabled(false); //user doesn't need to refresh
 
         btnBack.setOnClickListener(onClickListener);
 

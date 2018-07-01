@@ -1,6 +1,5 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
@@ -10,9 +9,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.internal.firebase_auth.zzao;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +26,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -191,7 +186,7 @@ public class HeaderPresenterTest {
                 return false;
             }
         };
-        verify(mProvider).getLoggedInUser(mUserCallbackCaptor.capture());
+        verify(mProvider).getSignedInUser(mUserCallbackCaptor.capture());
         mUserCallbackCaptor.getValue().onUserAccountProvided(firebaseUser);
 
         InOrder inOrder = Mockito.inOrder(mView);
@@ -210,7 +205,7 @@ public class HeaderPresenterTest {
 
         InOrder inOrder = Mockito.inOrder(mView);
 
-        verify(mProvider).getLoggedInUser(mUserCallbackCaptor.capture());
+        verify(mProvider).getSignedInUser(mUserCallbackCaptor.capture());
         mUserCallbackCaptor.getValue().onUserAccountProvided(null);
 
         inOrder.verify(mView).showAuthenticatedUserUi(false);
@@ -232,7 +227,7 @@ public class HeaderPresenterTest {
     public void onGoogleAccountProvided_performsFirebaseLogin(){
         GoogleSignInAccount account = Mockito.mock(GoogleSignInAccount.class);
         mPresenter.onGoogleAccountProvided(account);
-        verify(mProvider).loginUser(any(GoogleSignInAccount.class), mCompleteListenerCaptor.capture());
+        verify(mProvider).signInUser(any(GoogleSignInAccount.class), mCompleteListenerCaptor.capture());
     }
 
 

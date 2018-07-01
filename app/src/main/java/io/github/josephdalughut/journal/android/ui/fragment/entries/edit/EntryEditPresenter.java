@@ -13,15 +13,15 @@ import io.github.josephdalughut.journal.android.data.models.entry.Entry;
  */
 public class EntryEditPresenter implements EntryEditContract.Presenter, EntryEditRepository.LoadEntryCallback {
 
-    EntryEditContract.View mView; //view impl
-    EntryEditRepository mRepository; //repo impl
+    private EntryEditContract.View mView; //view impl
+    private EntryEditRepository mRepository; //repo impl
 
     /**
      * Default constructor
      * @param mView implementation of {@link EntryEditContract.View}
      * @param mRepository implementation of {@link EntryEditRepository}
      */
-    public EntryEditPresenter(EntryEditContract.View mView, EntryEditRepository mRepository) {
+    EntryEditPresenter(EntryEditContract.View mView, EntryEditRepository mRepository) {
         this.mView = mView;
         this.mRepository = mRepository;
     }

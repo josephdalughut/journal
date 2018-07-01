@@ -81,7 +81,7 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
                 super.onPostExecute(entry);
                 if(loadEntryCallback == null)
                     return;
-                EntryEditRepositoryImpl.this.mEntry = entry;
+                EntryEditRepositoryImpl.this.mEntry = entry; // reference entry instance for future use
                 loadEntryCallback.onEntryLoaded(entry);
             }
         }.execute(entryId);
@@ -120,6 +120,8 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
             @Override
             protected void onPostExecute(Long aLong) {
                 super.onPostExecute(aLong);
+
+                // start service to delete entry on firebase
                 Intent intent = new Intent(mContext, EntryBackupService.class);
                 intent.putExtra(EntryBackupService.EXTRA_FIRESTORE_ACTION, EntryBackupService.ACTION_DELETE);
                 intent.putExtra(EntryBackupService.EXTRA_ENTRY_ID, aLong);
