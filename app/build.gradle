@@ -86,6 +86,7 @@ dependencies {
     // Robolectric for TDD, unit testing individual Android components
     testImplementation "org.robolectric:robolectric:3.8"
     testImplementation "org.robolectric:shadows-supportv4:3.8"
+    testImplementation "org.robolectric:multidex:3.4.2"
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:1.0.2"

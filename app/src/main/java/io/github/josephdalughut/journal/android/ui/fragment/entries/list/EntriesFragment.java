@@ -55,7 +55,7 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
     private EntryAdapter mAdapter; //our adapter would handle displaying our entries in recyclerView
 
-    private EntriesContract.Presenter mPresenter;
+    protected EntriesContract.Presenter mPresenter;
 
     /**
      * Use this instead of the default constructor to create an {@link EntriesFragment instance}

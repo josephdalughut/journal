@@ -9,6 +9,12 @@ As part of a 7-day coding challenge, we were tasked in the *Intermediate Android
 app where users can pen down their *thoughts* and *feelings*. You can find more info on the challenge in this 
 [Google Doc](https://docs.google.com/document/d/1OvRxkhQpAfoclbdDrFu7mZmonA2cqq6Ri163RRKgWpg/edit).
 
+## Features
+- Add / Modify journal entries
+- Search for journal entries by title or content
+- [Google Sign](https://developers.google.com/identity/sign-in/android/start-integrating) in and [Firebase Authentication](https://firebase.google.com/docs/auth/)
+- Backup and sync using [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/) 
+
 ## Installation
 
 You can install this app simply by downloading the debug build [here](https://somefile). 
@@ -25,7 +31,7 @@ Alternatively, you can download the complete source code from here and build it 
 - Source code
 - A couple of minutes
 
-#### Directions
+### Directions
 
 - Download the source code either from [here](https://github.com/josephdalughut/journal/archive/master.zip) or by cloning using `git`:
 
@@ -33,9 +39,25 @@ Alternatively, you can download the complete source code from here and build it 
       git clone https://github.com/josephdalughut/journal.git
 
 - Fire up **Android Studio** and `Open an existing Android Studio project`
-- Navigate and select the downloaded project folder
-- Wait a few minutes for `gradle` to build stuff
+- Navigate to and select the downloaded project folder
+- [Add Firebase to your project](https://firebase.google.com/docs/android/setup)
+- Sync and build your project
 - Build and Run the app on your emulator or device.
+
+## Testing
+Units were test-driven
+#### Unit Tests
+- [Android JUnit](https://developer.android.com/training/testing/junit-runner)
+- [Roboletric](http://robolectric.org/)
+- [Mockito](http://site.mockito.org/)
+
+- Directory: */app/src/test*
+
+#### Instrumentation & UI Tests
+A few Ui tests as well (however I mostly used Robolectric for testing UI units)
+- [Espresso](https://developer.android.com/training/testing/espresso/)
+
+- Directory: */app/src/androidTest*
 
 ## Screenshots
 
