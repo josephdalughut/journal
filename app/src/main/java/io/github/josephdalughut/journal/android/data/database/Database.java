@@ -36,11 +36,6 @@ public abstract class Database extends RoomDatabase {
     private static Database sInstance; //singleton instance
 
     /**
-     * Use {@link #getInstance(Context)} instead
-     */
-    private Database(){}
-
-    /**
      * @return a singleton {@link Database} instance.
      */
     public static Database getInstance(Context context){
