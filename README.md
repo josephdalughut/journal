@@ -18,6 +18,7 @@ app where users can pen down their *thoughts* and *feelings*. You can find more 
 ## Installation
 
 You can install this app simply by downloading the debug build [here](https://github.com/josephdalughut/journal/blob/master/app/apk/journal-debug.apk?raw=true). 
+- Make sure you [enable installation from unknown sources](https://www.applivery.com/docs/troubleshooting/android-unknown-sources)
 - Copy the file to a location on your Android device.
 - Click on the file to start the installation process.
 
