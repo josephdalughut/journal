@@ -1,4 +1,4 @@
-package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
+import static org.junit.Assert.*;
 
 /**
  * Joey Dalu (Joseph Dalughut)
@@ -6,5 +6,6 @@ package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
  * JournalApp
  * 01/07/2018
  */
-public interface EntrySearchContract {
+public class EntrySearchPresenterTest {
+
 }

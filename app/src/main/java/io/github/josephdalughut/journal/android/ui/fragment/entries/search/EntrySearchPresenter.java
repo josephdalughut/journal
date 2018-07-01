@@ -6,5 +6,5 @@ package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
  * JournalApp
  * 01/07/2018
  */
-public interface EntrySearchContract {
+public class EntrySearchPresenter {
 }
