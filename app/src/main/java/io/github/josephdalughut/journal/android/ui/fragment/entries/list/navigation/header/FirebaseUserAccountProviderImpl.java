@@ -41,4 +41,9 @@ public class FirebaseUserAccountProviderImpl implements FirebaseUserAccountProvi
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(onCompleteListener);
     }
+
+    @Override
+    public void logout() {
+        mAuth.signOut();
+    }
 }

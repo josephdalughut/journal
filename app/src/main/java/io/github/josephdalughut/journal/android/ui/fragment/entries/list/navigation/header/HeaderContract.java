@@ -22,6 +22,7 @@ public interface HeaderContract {
         public void showLoadingProgress(boolean visible);
         public void showLoginUi();
         public void showUserDetails(String displayName, String emailAddress, Uri photoUri);
+        public void startFirebaseSync();
     }
 
     public interface Presenter {

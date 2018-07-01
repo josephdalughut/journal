@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/group_prefs"
-        android:checkableBehavior="single">
+        android:id="@+id/group_prefs">
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_action_settings"
             android:title="@string/text_settings" />
 
-        <item
-            android:id="@+id/nav_git"
-            android:icon="@drawable/ic_action_github_circle"
-            android:title="@string/text_github_repo" />
     </group>
 
 

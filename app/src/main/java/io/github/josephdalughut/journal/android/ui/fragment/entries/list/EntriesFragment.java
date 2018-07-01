@@ -1,7 +1,11 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,19 +15,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
 
 import butterknife.BindView;
 import io.github.josephdalughut.journal.android.R;
-import io.github.josephdalughut.journal.android.data.database.Database;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEditFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
+import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
+import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPreferencesFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
 /**
@@ -87,6 +93,18 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
         //inflate menu
         toolbar.inflateMenu(R.menu.menu_entries);
+        vwNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_settings:
+                        getMainActivity().addFragmentToUi(SettingsFragment.newInstance(), false);
+                        return true;
+                }
+                return false;
+            }
+        });
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +130,12 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
                 HeaderFragment.newInstance()).commitAllowingStateLoss();
 
         laySwipeRefresh.setEnabled(false);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.loadEntries();
     }
 

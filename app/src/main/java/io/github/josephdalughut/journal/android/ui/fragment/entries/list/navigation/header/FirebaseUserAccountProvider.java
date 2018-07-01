@@ -17,6 +17,7 @@ public interface FirebaseUserAccountProvider {
 
     public void getLoggedInUser(UserAccountCallback callback);
     public void loginUser(GoogleSignInAccount googleSignInAccount, OnCompleteListener<AuthResult> onCompleteListener);
+    public void logout();
 
     /**
      * Simple callback for logged in firebase user.

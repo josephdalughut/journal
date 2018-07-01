@@ -1,19 +1,28 @@
 package io.github.josephdalughut.journal.android.service;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import io.github.josephdalughut.journal.android.data.database.Database;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
@@ -26,34 +35,29 @@ import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPre
  * 30/06/2018
  *
  * A service which runs backing up and deleting
- * {@link io.github.josephdalughut.journal.android.data.models.entry.Entry}
+ * {@link Entry}
  * to firestore
  */
-public class EntryBackupService extends IntentService {
+@SuppressLint("StaticFieldLeak")
+public class EntrySyncService extends IntentService {
 
-    private static final String LOG_TAG = EntryBackupService.class.getSimpleName();
+    private static final String LOG_TAG = EntrySyncService.class.getSimpleName();
 
     /**
      * Used to specify the action to be performed by the service. Can be one of:
      * <ul>
      *     <li>
-     *         {@link #ACTION_BACKUP}: To backup all {@link Entry}(ies) in the database
-     *         which haven't been saved to firebase
-     *     </li>
-     *     <li>
-     *         {@link #ACTION_DELETE}: To delete a specific {@link Entry} from the database. Make sure
-     *         to supply the id of the entry as {@link #EXTRA_ENTRY_ID} in the intent.
+     *         {@link #ACTION_SYNC}: To sync back all entries from firebase
      *     </li>
      * </ul>
      */
     public static final String EXTRA_FIRESTORE_ACTION = "ACTION";
 
 
-    public static final String ACTION_BACKUP = "BACKUP";
-    public static final String ACTION_DELETE = "DELETE";
+    public static final String ACTION_SYNC = "SYNC";
 
     /**
-     * Should be passed as an extra in an intent with action {@link #ACTION_DELETE}
+     * Should be passed as an extra in an intent with action {@link #ACTION_SYNC}
      */
     public static final String EXTRA_ENTRY_ID = "ENTRY.ID";
 
@@ -61,8 +65,8 @@ public class EntryBackupService extends IntentService {
     private Database mDbInstance;
     private FirebaseFirestore mFirestoreInstance;
 
-    public EntryBackupService() {
-        super(EntryBackupService.class.getSimpleName());
+    public EntrySyncService() {
+        super(EntrySyncService.class.getSimpleName());
     }
 
     @Override
@@ -102,52 +106,46 @@ public class EntryBackupService extends IntentService {
         Log.d(LOG_TAG, "User signed in: "+ firebaseUser.getEmail());
 
         String action = intent.getStringExtra(EXTRA_FIRESTORE_ACTION);
-        if(action.matches(ACTION_BACKUP)){
-            performBackup(firebaseUser);
-        }else if(action.matches(ACTION_DELETE)){
-            if(intent.hasExtra(EXTRA_ENTRY_ID)){
-                Long entryId = intent.getLongExtra(EXTRA_ENTRY_ID, -1);
-                if(entryId < 0){
-                    Log.d(LOG_TAG, "Invalid entry id");
-                }else{
-                    deleteEntry(firebaseUser, entryId);
-                }
-            }else{
-                Log.d(LOG_TAG, "No entry id provided");
-            }
+        if(action.matches(ACTION_SYNC)){
+            performSync(firebaseUser);
         }
 
     }
 
-    private void performBackup(FirebaseUser firebaseUser){
+    private void performSync(FirebaseUser firebaseUser){
         Log.d(LOG_TAG, "Starting sync");
-        List<Entry> entries = mDbInstance.getEntryDao().loadUnSyncedEntries();
-        if(entries == null || entries.isEmpty()){
-            Log.d(LOG_TAG, "Stopping sync, no items");
-            return;
-        }
-        Log.d(LOG_TAG, "Syncing "+entries.size() + " entries");
-        CollectionReference entryCollection = mFirestoreInstance.collection(Entry.FIREBASE_COLLECTION_NAME);
-        for (Entry entry: entries){
-            entry.setFirebase_user_id(firebaseUser.getUid());
-            entry.setSynced(true);
+        mFirestoreInstance.collection(Entry.FIREBASE_COLLECTION_NAME)
+                .whereEqualTo("firebase_user_id", firebaseUser.getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
+                        if(!snapshots.isEmpty()){
+                            Log.d(LOG_TAG, "Number of entries synced "+snapshots.size());
+                            List<Entry> entries = new ArrayList<>();
+                            for (DocumentSnapshot documentSnapshot: snapshots){
+                                Entry entry = documentSnapshot.toObject(Entry.class);
+                                entries.add(entry);
+                            }
 
-            entryCollection.document(Entry.getFirebaseId(firebaseUser, entry)).set(entry);
-
-            //update the entry as synced
-            entry.setSynced(true);
-            mDbInstance.getEntryDao().insert(entry);
-        }
-
-        Log.d(LOG_TAG, "Sync finished");
-    }
-
-    private void deleteEntry(FirebaseUser firebaseUser, Long entryId){
-        Log.d(LOG_TAG, "Deleting entry");
-        String firebaseId = Entry.getFirebaseId(firebaseUser, entryId);
-        mFirestoreInstance.collection(Entry.FIREBASE_COLLECTION_NAME) //delete document
-                .document(firebaseId).delete();
-        Log.d(LOG_TAG, "Deleted entry");
+                            /*
+                                onSuccess is called by default on main thread I believe,
+                                so we'll just cache this quickly on a background thread.
+                             */
+                            new AsyncTask<List<Entry>, Void, Void>(){
+                                @Override
+                                protected Void doInBackground(List<Entry>... lists) {
+                                    mDbInstance.getEntryDao().insert(lists[0]);
+                                    return null;
+                                }
+                            }.execute(entries);
+                        }else{
+                            Log.d(LOG_TAG, "No entries found");
+                        }
+                        Log.d(LOG_TAG, "Sync finished");
+                    }
+                });
     }
 
 }

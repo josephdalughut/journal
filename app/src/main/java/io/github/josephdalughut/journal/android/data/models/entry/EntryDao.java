@@ -37,11 +37,17 @@ public interface EntryDao extends EntityDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long insert(Entry entry);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void insert(List<Entry> entries);
+
     /**
      * Deletes an {@link Entry} from the database
      */
     @Delete
     public void delete(Entry entry);
+
+    @Query("DELETE FROM entries")
+    public void delete();
 
     /**
      * @return a collection of all {@link Entry}(ies) which haven't been synced

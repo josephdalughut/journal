@@ -68,6 +68,12 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
     @Override
     public void onGoogleAccountProvided(GoogleSignInAccount account) {
         if(mProvider == null) return;
+        if(account == null){
+            mView.showAuthenticatedUserUi(false);
+            mView.showUnauthenticatedUserUi(true);
+            mView.showLoadingProgress(false);
+            return;
+        }
         mProvider.loginUser(account, this);
     }
 
@@ -77,6 +83,7 @@ public class HeaderPresenter implements HeaderContract.Presenter, FirebaseUserAc
         if(task.isSuccessful()){
             Log.d(LOG_TAG, "Sign in success");
             mProvider.getLoggedInUser(this);
+            mView.startFirebaseSync();
         }else{
             Log.d(LOG_TAG, "Sign in exception");
             mView.showAuthenticatedUserUi(false);

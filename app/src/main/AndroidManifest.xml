@@ -39,6 +39,10 @@
             android:exported="false"
             />
 
+        <service android:name=".service.EntrySyncService"
+            android:exported="false"
+            />
+
     </application>
 
 </manifest>
