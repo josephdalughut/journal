@@ -24,5 +24,6 @@ public interface EntriesRepository {
     }
 
     public void loadEntries(LifecycleOwner lifecycleOwner, Observer<List<Entry>> observer);
+    public void loadEntries(String searchQuery, LifecycleOwner lifecycleOwner, Observer<List<Entry>> observer);
 
 }

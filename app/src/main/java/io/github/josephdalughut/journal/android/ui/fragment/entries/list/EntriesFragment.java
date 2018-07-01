@@ -28,6 +28,7 @@ import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEd
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.search.SearchEntriesFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPreferencesFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
@@ -93,6 +94,17 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
         //inflate menu
         toolbar.inflateMenu(R.menu.menu_entries);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_search:
+                        getMainActivity().addFragmentToUi(SearchEntriesFragment.newInstance(), false);
+                        return true;
+                }
+                return false;
+            }
+        });
         vwNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

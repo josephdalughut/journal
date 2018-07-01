@@ -1,9 +1,6 @@
-package io.github.josephdalughut.journal.android.ui.fragment.entries.list;
+package io.github.josephdalughut.journal.android.ui.fragment.entries.search;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,9 +11,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -25,11 +26,13 @@ import io.github.josephdalughut.journal.android.R;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
 import io.github.josephdalughut.journal.android.ui.fragment.abstracts.Fragment;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.edit.EntryEditFragment;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesContract;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesPresenter;
+import io.github.josephdalughut.journal.android.ui.fragment.entries.list.EntriesRepositoryImpl;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.EntryAdapter;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.adapter.PaddingItemDecoration;
 import io.github.josephdalughut.journal.android.ui.fragment.entries.list.navigation.header.HeaderFragment;
 import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsFragment;
-import io.github.josephdalughut.journal.android.ui.fragment.settings.SettingsPreferencesFragment;
 import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
 
 /**
@@ -38,36 +41,34 @@ import io.github.josephdalughut.journal.android.ui.utils.ViewUtils;
  * JournalApp
  * 29/06/2018
  *
- * Displays a list of type {@link io.github.josephdalughut.journal.android.data.models.entry.Entry}
+ * Displays a list of type {@link Entry}
  * belonging to the current user
  */
-public class EntriesFragment extends Fragment implements EntriesContract.View, EntryAdapter.EntrySelectCallback {
+public class SearchEntriesFragment extends Fragment implements EntrySearchContract.View, EntryAdapter.EntrySelectCallback {
 
-    private static final String LOG_TAG = EntriesFragment.class.getSimpleName();
+    private static final String LOG_TAG = SearchEntriesFragment.class.getSimpleName();
 
     /**
-     * Use this instead of the default constructor to create an {@link EntriesFragment instance}
-     * @return a new {@link EntriesFragment} instance.
+     * Use this instead of the default constructor to create an {@link SearchEntriesFragment instance}
+     * @return a new {@link SearchEntriesFragment} instance.
      */
-    public static EntriesFragment newInstance(){
-        return new EntriesFragment();
+    public static SearchEntriesFragment newInstance(){
+        return new SearchEntriesFragment();
     }
 
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
-    @BindView(R.id.layDrawer) public DrawerLayout layDrawer;
-
-    @BindView(R.id.fabAddEntry) public FloatingActionButton fabAddEntry;
+    @BindView(R.id.btnBack) public ImageButton btnBack;
+    @BindView(R.id.edtSearch) public EditText edtSearch;
+    @BindView(R.id.btnCloseSearch) public ImageButton btnCloseSearch;
 
     @BindView(R.id.laySwipeRefresh) public SwipeRefreshLayout laySwipeRefresh;
     @BindView(R.id.vwRecycler) public RecyclerView vwRecycler; //shows our entries
     @BindView(R.id.layEmpty) public View layEmpty;
 
-    @BindView(R.id.vwNavigation) public NavigationView vwNavigation;
-
     private EntryAdapter mAdapter; //our adapter would handle displaying our entries in recyclerView
 
-    EntriesContract.Presenter mPresenter;
+    EntrySearchContract.Presenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,60 +89,82 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
 
         vwRecycler.setAdapter(mAdapter);
 
-        mPresenter = new EntriesPresenter(this,
-                ViewModelProviders.of(this).get(EntriesRepositoryImpl.class));
-
-        //inflate menu
-        toolbar.inflateMenu(R.menu.menu_entries);
-        vwNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_settings:
-                        getMainActivity().addFragmentToUi(SettingsFragment.newInstance(), false);
-                        return true;
-                }
-                return false;
+            public void onClick(View v) {
+                mPresenter.onBackButtonPressed();
             }
         });
+        btnCloseSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.onClearSearchButtonClicked();
+            }
+        });
+
+        mPresenter = new EntrySearchPresenter(this,
+                ViewModelProviders.of(this).get(EntriesRepositoryImpl.class));
+
+        //when text changes, start search
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mPresenter.loadEntries(s.toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btnCloseSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.onClearSearchButtonClicked();
+            }
+        });
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(layDrawer.isDrawerOpen(Gravity.START)){
-                    layDrawer.closeDrawer(Gravity.START);
-                }else{
-                    layDrawer.openDrawer(Gravity.START);
-                }
+                getActivity().onBackPressed();
             }
         });
 
-        fabAddEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.onAddEntryButtonClicked();
-            }
-        });
 
         ViewUtils.setDefaultRefreshColors(laySwipeRefresh);
 
-//        add header fragment
-        getChildFragmentManager().beginTransaction().replace(R.id.layNavigationHeaderFragmentContainer,
-                HeaderFragment.newInstance()).commitAllowingStateLoss();
 
         laySwipeRefresh.setEnabled(false);
 
     }
 
+
+    @Override
+    public void navigateBack() {
+        getActivity().onBackPressed();
+    }
+
+    @Override
+    public void clearSearch() {
+        edtSearch.setText(null);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.loadEntries();
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_entries;
+        return R.layout.fragment_entry_search;
     }
 
     @Override
@@ -171,12 +194,15 @@ public class EntriesFragment extends Fragment implements EntriesContract.View, E
     }
 
     @Override
-    public void showSearchUi() {
-
-    }
+    public void showSearchUi() { }
 
     @Override
     public void showEmptyItemsPlaceholder(boolean visible) {
         layEmpty.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @Override
+    public void showCloseSearchButton(boolean visible) {
+        btnCloseSearch.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 }

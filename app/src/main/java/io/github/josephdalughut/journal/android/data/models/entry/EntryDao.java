@@ -28,6 +28,9 @@ public interface EntryDao extends EntityDao{
     @Query("SELECT * FROM entries ")
     public LiveData<List<Entry>> loadEntries();
 
+    @Query("SELECT * FROM entries where title LIKE :searchQuery OR content LIKE :searchQuery")
+    public LiveData<List<Entry>> loadEntries(String searchQuery);
+
     @Query("SELECT * FROM entries where id == :entryId")
     public Entry getEntry(Long entryId);
 

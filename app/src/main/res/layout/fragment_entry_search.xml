@@ -1,7 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:clickable="true"
-    android:focusable="true" android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/bg_color_page"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            android:layout_height="@dimen/height_toolbar"
+            app:contentInsetStart="0dp"
+            android:elevation="@dimen/elevation_toolbar"
+            app:elevation="@dimen/elevation_toolbar"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="@dimen/height_toolbar"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_action_arrow_back"
+                    android:tint="@color/appDarkSecondary"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/text_search"
+                    android:lines="1"
+                    android:imeOptions="actionSearch"
+                    android:id="@+id/edtSearch"
+                    android:background="@android:color/transparent">
+
+                    <requestFocus/>
+
+                </EditText>
+
+                <ImageButton
+                    android:visibility="invisible"
+                    android:id="@+id/btnCloseSearch"
+                    android:layout_width="@dimen/height_toolbar"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_action_close"
+                    android:tint="@color/appDarkSecondary"
+                    />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/laySwipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vwRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/layEmpty"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/height_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_search_100"
+                    android:tint="#eee"
+                    android:layout_width="@dimen/height_button_double"
+                    android:layout_height="@dimen/height_button_double" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

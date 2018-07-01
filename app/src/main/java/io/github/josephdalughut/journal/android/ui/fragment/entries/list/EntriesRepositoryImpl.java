@@ -37,7 +37,17 @@ public class EntriesRepositoryImpl extends AndroidViewModel implements EntriesRe
 
     @Override
     public void loadEntries(LifecycleOwner lifecycleOwner, Observer<List<Entry>> observer) {
+        if(mEntries!=null && mEntries.hasObservers())
+            mEntries.removeObservers(lifecycleOwner);
         mEntries = mDatabase.getEntryDao().loadEntries();
+        mEntries.observe(lifecycleOwner, observer);
+    }
+
+    @Override
+    public void loadEntries(String searchQuery, LifecycleOwner lifecycleOwner, Observer<List<Entry>> observer) {
+        if(mEntries!=null && mEntries.hasObservers())
+            mEntries.removeObservers(lifecycleOwner);
+        mEntries = mDatabase.getEntryDao().loadEntries(searchQuery);
         mEntries.observe(lifecycleOwner, observer);
     }
 }

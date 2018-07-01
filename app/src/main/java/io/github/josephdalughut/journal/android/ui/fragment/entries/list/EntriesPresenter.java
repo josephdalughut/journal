@@ -19,8 +19,8 @@ import io.github.josephdalughut.journal.android.data.models.entry.Entry;
  */
 public class EntriesPresenter implements EntriesContract.Presenter, Observer<List<Entry>> {
 
-    EntriesContract.View mView; //view controlled by this presenter
-    EntriesRepository mRepository; //repo providing entries
+    protected EntriesContract.View mView; //view controlled by this presenter
+    protected EntriesRepository mRepository; //repo providing entries
 
     /**
      * Default constructor
