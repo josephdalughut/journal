@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/group_1"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_action_person"
-            android:title="@string/text_profile" />
-    </group>
-
-    <group
         android:id="@+id/group_prefs"
         android:checkableBehavior="single">
         <item
@@ -18,9 +9,9 @@
             android:title="@string/text_settings" />
 
         <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_action_live_help"
-            android:title="@string/text_help" />
+            android:id="@+id/nav_git"
+            android:icon="@drawable/ic_action_github_circle"
+            android:title="@string/text_github_repo" />
     </group>
 
 

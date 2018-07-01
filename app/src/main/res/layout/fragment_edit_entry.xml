@@ -28,6 +28,16 @@
             android:tint="@color/appDarkSecondary"
             />
 
+        <ImageButton
+            android:id="@+id/btnSync"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_action_cloud_sync"
+            android:tint="@color/appDarkSecondary"
+            />
 
     </android.support.v7.widget.Toolbar>
 

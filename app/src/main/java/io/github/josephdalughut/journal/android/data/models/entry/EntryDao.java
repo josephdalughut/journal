@@ -43,4 +43,10 @@ public interface EntryDao extends EntityDao{
     @Delete
     public void delete(Entry entry);
 
+    /**
+     * @return a collection of all {@link Entry}(ies) which haven't been synced
+     */
+    @Query("SELECT * FROM entries where synced == 0")
+    public List<Entry> loadUnSyncedEntries();
+
 }

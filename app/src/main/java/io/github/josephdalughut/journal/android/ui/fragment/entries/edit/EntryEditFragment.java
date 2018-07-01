@@ -84,7 +84,7 @@ public class EntryEditFragment extends Fragment implements EntryEditContract.Vie
 
         //create new presenter
         mPresenter = new EntryEditPresenter(this,
-                new EntryEditRepositoryImpl(Database.getInstance(getContext())));
+                new EntryEditRepositoryImpl(getContext()));
 
         //load the entry
         mPresenter.loadEntry(mEntryId);

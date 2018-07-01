@@ -1,6 +1,8 @@
 package io.github.josephdalughut.journal.android.ui.fragment.entries.edit;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +11,7 @@ import java.util.Date;
 
 import io.github.josephdalughut.journal.android.data.database.Database;
 import io.github.josephdalughut.journal.android.data.models.entry.Entry;
+import io.github.josephdalughut.journal.android.service.EntryBackupService;
 
 /**
  * Joey Dalu (Joseph Dalughut)
@@ -23,9 +26,11 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
 
     private Database mDatabase; //database instance
     private Entry mEntry;
+    private Context mContext;
 
-    public EntryEditRepositoryImpl(Database mDatabase) {
-        this.mDatabase = mDatabase;
+    public EntryEditRepositoryImpl(Context context) {
+        this.mContext = context;
+        this.mDatabase = Database.getInstance(mContext.getApplicationContext());
     }
 
     @Override
@@ -35,19 +40,29 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
             return;
         }
 
-        new AsyncTask<Entry, Void, Void>(){
+        new AsyncTask<Entry, Void, Long>(){
             @Override
-            protected Void doInBackground(Entry... entries) {
+            protected Long doInBackground(Entry... entries) {
                 Entry entry = entries[0];
 
                 Date now = Calendar.getInstance().getTime();
                 if(entry.getCreatedAt() == null) entry.setCreatedAt(now); //set the date created if null
-                entry.setUpdatedAt(now);
+                entry.setSynced(false).setUpdatedAt(now);
 
                 Log.d(LOG_TAG, "Adding entry into database");
-                Long rowsAffected = mDatabase.getEntryDao().insert(entries[0]);
-                Log.d(LOG_TAG, "" +rowsAffected +" entries added into database");
-                return null;
+                Long entryId = mDatabase.getEntryDao().insert(entries[0]);
+                Log.d(LOG_TAG, "Entry with id "+entryId + " added");
+
+                return entryId;
+            }
+
+            @Override
+            protected void onPostExecute(Long aLong) {
+                super.onPostExecute(aLong);
+                Log.d(LOG_TAG, "Starting sync");
+                Intent intent = new Intent(mContext, EntryBackupService.class);
+                intent.putExtra(EntryBackupService.EXTRA_FIRESTORE_ACTION, EntryBackupService.ACTION_BACKUP);
+                mContext.getApplicationContext().startService(intent);
             }
         }.execute(mEntry);
     }
@@ -94,12 +109,21 @@ public class EntryEditRepositoryImpl implements EntryEditRepository {
         Entry deletedEntry = mEntry; //cache entry to delete, set to null, if not it gets saved again.
         this.mEntry = null;
         Log.d(LOG_TAG, "Deleting entry: "+deletedEntry.getId());
-        new AsyncTask<Entry, Void, Void>(){
+        new AsyncTask<Entry, Void, Long>(){
             @Override
-            protected Void doInBackground(Entry... entries) {
+            protected Long doInBackground(Entry... entries) {
                 mDatabase.getEntryDao().delete(entries[0]);
                 Log.d(LOG_TAG, "Entry deleted");
-                return null;
+                return entries[0].getId();
+            }
+
+            @Override
+            protected void onPostExecute(Long aLong) {
+                super.onPostExecute(aLong);
+                Intent intent = new Intent(mContext, EntryBackupService.class);
+                intent.putExtra(EntryBackupService.EXTRA_FIRESTORE_ACTION, EntryBackupService.ACTION_DELETE);
+                intent.putExtra(EntryBackupService.EXTRA_ENTRY_ID, aLong);
+                mContext.startService(intent);
             }
         }.execute(deletedEntry);
     }

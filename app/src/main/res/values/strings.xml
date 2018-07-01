@@ -17,4 +17,5 @@
     <string name="text_info_sign_in_navigation_header">Sign in to save and sync your Journal</string>
     <string name="text_info_login_sync_navigation_header">Your Journal is synced with Google</string>
     <string name="text_info_empty_entries">You have no entries yet.</string>
+    <string name="text_github_repo">Github Repo</string>
 </resources>
